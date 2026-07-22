@@ -1,0 +1,13 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "xyz.virifi.numetric-mcp/numetric",
+  "description": "Read-only NuMetric.work accounting & ERP data: statements, KPIs, reports, invoices, documents.",
+  "version": "0.2.0",
+  "websiteUrl": "https://numetric.work",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://numetric-mcp.virifi.xyz/mcp"
+    }
+  ]
+}

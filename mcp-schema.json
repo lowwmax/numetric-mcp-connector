@@ -1,0 +1,1069 @@
+{
+  "server": "numetric-mcp",
+  "instructions": "NuMetric MCP — read-only access to a NuMetric.work account (POS/ERP/accounting).\n\nTENANCY: one connected account can hold SEVERAL businesses, and every data tool acts on the one currently ACTIVE. You never pass a businessId as a tool argument. Instead: call list_businesses to see the account's businesses, then select_business (by id or company name) to choose one; the choice sticks for the session and can be switched anytime. If no business is selected yet, data tools return NO_BUSINESS_SELECTED — pick one first. When the account has exactly one business it is auto-selected. Read numetric://business/profile for the active business (or the list, when none is selected). Note: read scopes are per-business, so switching businesses can change what you're permitted to read.\n\nREADS are safe and free to call. Many results carry a \"confidence\" field — \"Verified\" means the figure is cross-checked/live; \"Guarded\" means it may be stale or divergent, so report it as unconfirmed and do NOT assert it as fact. Notably: get_receivables cross-checks status-based vs aging overdue totals; get_financial_statement profit_loss/balance_sheet are snapshot-sourced (Guarded) while trial_balance is live (Verified); get_kpis returns per-KPI confidence and inputs. Tools you lack permission for return a SCOPE_REQUIRED error — your granted read scopes reflect your NuMetric permissions.\n\nSOURCE OF TRUTH: NuMetric's accounting engine is authoritative — it is the single source of truth for every figure these tools return (account balances, trial balance, P&L, balance sheet, cash flow, KPIs). Those figures are computed by NuMetric's ledger and handed to you ready-made: you never need to reconstruct accounting logic, and you must NOT re-derive totals from raw transactions or replace an engine figure with your own recomputation. Report the engine's numbers as its findings. You may think, analyse, and interpret on top of them — but your own accounting reasoning must not conflict with, contradict, or silently override those findings. If your calculation disagrees with an engine figure, treat the engine as correct and surface the discrepancy as a question, not a correction. (A \"Guarded\" figure is unconfirmed — flag it as such, but still do not overwrite it with your own math.)\n\nThis server exposes read tools only. It cannot record payments, approve invoices, create/update documents, or delete anything — there are no write tools to call.\n\nDATA QUALITY: list_customers flags duplicate/guest-fragmented records; surface those caveats rather than treating counts as clean.",
+  "generatedFrom": "live tools/list (read-only build)",
+  "toolCount": 38,
+  "tools": [
+    {
+      "name": "get_account_transactions_report",
+      "title": "Account transactions report",
+      "description": "Period account-movement report (the \"new\" account transactions report): per-account debit/credit/balance for the period, PLUS opening balances, income/expense, and retained sections. periodType groups the reporting period (DAILY/WEEKLY/MONTHLY/QUARTERLY/YEARLY). Built on the same engine trial-balance endpoint (Verified) — richer than get_financial_statement trial_balance, which returns only the account movements. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "Inclusive period start, YYYY-MM-DD."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Inclusive period end, YYYY-MM-DD."
+          },
+          "periodType": {
+            "type": "string",
+            "enum": [
+              "DAILY",
+              "WEEKLY",
+              "MONTHLY",
+              "QUARTERLY",
+              "YEARLY"
+            ],
+            "description": "Reporting-period grouping (default DAILY)."
+          }
+        },
+        "required": [
+          "startDate",
+          "endDate"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_asset_custody_report",
+      "title": "Asset custody report",
+      "description": "Fixed assets organized by CUSTODIAN (who holds them): each asset with its holder, location, and current value, plus a per-custodian roll-up (asset count + total purchase/net-book value). Filter by assignedToUserId and/or location. Depreciation/net book value are NuMetric-computed as-of today (Verified). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "assignedToUserId": {
+            "type": "string",
+            "description": "Filter to one custodian (the user an asset is assigned to)."
+          },
+          "location": {
+            "type": "string",
+            "description": "Filter by asset location."
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_asset_report",
+      "title": "Fixed-asset (depreciation) report",
+      "description": "Fixed-asset register with depreciation: per asset — name, type, serial, status, assignee, location, purchase date/value, depreciation %, accumulated depreciation, period depreciation, and net book value — plus totals. Optional filters: isAuto (auto-depreciation only), assetAccountId (fixed-asset account), assignedToUserId, location. NuMetric-computed depreciation (Verified) — do not re-derive. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "Period start, YYYY-MM-DD (bounds period depreciation)."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Period end / as-of date, YYYY-MM-DD (defaults to today)."
+          },
+          "isAuto": {
+            "type": "boolean",
+            "description": "Limit to assets with automatic depreciation."
+          },
+          "assetAccountId": {
+            "type": "string",
+            "description": "Filter by the fixed-asset account id (from list_chart_of_accounts)."
+          },
+          "assignedToUserId": {
+            "type": "string",
+            "description": "Filter by the user an asset is assigned to."
+          },
+          "location": {
+            "type": "string",
+            "description": "Filter by asset location."
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_bill_status",
+      "title": "Get bill status",
+      "description": "AP status of one vendor bill (status, due date, due amount, total). Pass billId, or billNumber (resolved from the bill list). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "billId": {
+            "type": "string",
+            "description": "The bill _id (preferred)."
+          },
+          "billNumber": {
+            "type": "string",
+            "description": "Human bill number (resolved to an id)."
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_cash_position",
+      "title": "Cash & bank position",
+      "description": "Current combined cash and bank balance for the connected business. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_cashier_attendance",
+      "title": "Cashier attendance report",
+      "description": "Login-session attendance for one cashier over a date range: per-day login/logout times and duration. Requires cashierEmail (the cashier's login email — the report is per cashier). Login-session timing, not POS-terminal clock-in/out. NuMetric-sourced (Verified). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "Inclusive period start, YYYY-MM-DD."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Inclusive period end, YYYY-MM-DD."
+          },
+          "cashierEmail": {
+            "type": "string",
+            "description": "The cashier's login email. Required — the report resolves the user by email."
+          }
+        },
+        "required": [
+          "startDate",
+          "endDate",
+          "cashierEmail"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_cashier_sales_invoices",
+      "title": "Cashier sales — invoices",
+      "description": "One cashier's invoices over a date range (invoice-list view): per invoice — number, customer, dates, order source, POS/cash flags, subtotal/tax/discount/total/due, item count, and status — plus totals. Requires cashierEmail. Same underlying sales as get_cashier_sales_items (which aggregates by product instead). NuMetric-sourced (Verified). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "Inclusive period start, YYYY-MM-DD."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Inclusive period end, YYYY-MM-DD."
+          },
+          "cashierEmail": {
+            "type": "string",
+            "description": "The cashier's login email. Required — the report resolves the cashier by email."
+          }
+        },
+        "required": [
+          "startDate",
+          "endDate",
+          "cashierEmail"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_cashier_sales_items",
+      "title": "Cashier sales — items",
+      "description": "Units sold per product across ONE cashier's invoices over a date range: per product — quantity (units), gross line amount (price × qty, before invoice-level discounts/tax), and invoice count. Requires cashierEmail (the report is per cashier). The per-product roll-up is computed from the engine's invoice line items (stated in notes). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "Inclusive period start, YYYY-MM-DD."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Inclusive period end, YYYY-MM-DD."
+          },
+          "cashierEmail": {
+            "type": "string",
+            "description": "The cashier's login email. Required — the report resolves the cashier by email."
+          }
+        },
+        "required": [
+          "startDate",
+          "endDate",
+          "cashierEmail"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_daily_transactions",
+      "title": "Daily transactions report",
+      "description": "General-journal listing over a date range: one row per double-entry line — date, serial number, transaction number, description, category (Invoice/COGS/…), type, account, debit, credit — plus engine debit/credit totals and a balanced check. Rows sharing serialNumber belong to one transaction. NuMetric-computed (Verified). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "Inclusive period start, YYYY-MM-DD."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Inclusive period end, YYYY-MM-DD."
+          }
+        },
+        "required": [
+          "startDate",
+          "endDate"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_document",
+      "title": "Download document content",
+      "description": "Download one document's content as base64, with metadata (file name, type, size). Requires fileId (from list_documents). NOTE: content is returned INLINE as base64 — large files consume a lot of context, so files over maxBytes (default 5 MB) return metadata only (contentReturned:false); raise maxBytes to force. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "fileId": {
+            "type": "string",
+            "description": "The document fileId to download (from list_documents)."
+          },
+          "maxBytes": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Max file size to inline as base64 (default 5,000,000; capped at 25,000,000). Larger files return metadata only."
+          }
+        },
+        "required": [
+          "fileId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_document_bundle",
+      "title": "Download all documents on a record (ZIP)",
+      "description": "Download a ZIP of ALL documents attached to one record (invoice/bill/JV/product/…) as base64, with size. Requires referenceId (from list_documents — the record the files are attached to). Same size guard as get_document (default 5 MB → metadata only above it). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "referenceId": {
+            "type": "string",
+            "description": "The record id whose attached documents to bundle (referenceId from list_documents)."
+          },
+          "maxBytes": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "Max zip size to inline as base64 (default 5,000,000; capped at 25,000,000)."
+          }
+        },
+        "required": [
+          "referenceId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_financial_statement",
+      "title": "Financial statement",
+      "description": "Accrual-basis financial statement: statement = \"profit_loss\" (account-based income/expense + net profit), \"balance_sheet\" (assets/liabilities/equity as of endDate), \"trial_balance\" (per-account debit/credit/balance), \"general_ledger\" (per-account transaction detail with running balance — requires accountId), or \"cash_flow\" (monthly net cash in/out + net change for the year of endDate). Each carries a Verified/Guarded confidence. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": "string",
+            "enum": [
+              "profit_loss",
+              "balance_sheet",
+              "trial_balance",
+              "general_ledger",
+              "cash_flow"
+            ],
+            "description": "Which statement to return."
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Inclusive period start, YYYY-MM-DD (ignored for balance_sheet)."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Inclusive period end / as-of date, YYYY-MM-DD."
+          },
+          "projectId": {
+            "type": "string",
+            "description": "Optional project filter (profit_loss / balance_sheet)."
+          },
+          "accountId": {
+            "type": "string",
+            "description": "Required for general_ledger: the account whose ledger to return (get ids from list_chart_of_accounts)."
+          }
+        },
+        "required": [
+          "statement",
+          "startDate",
+          "endDate"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_invoice_source_report",
+      "title": "Invoice source report",
+      "description": "Non-draft invoices over a date range, filterable by SOURCE: orderFrom (e.g. \"POS-Order\"), customer, project, invoiceScope (local/export), invoiceKind (cash/regular). Each invoice carries customer, dates, order source, amounts (subtotal/tax/shipping/total/due), COGS, and status. Returns per-page sums and pagination. NuMetric-computed (Verified). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "Inclusive period start, YYYY-MM-DD."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Inclusive period end, YYYY-MM-DD."
+          },
+          "orderFrom": {
+            "type": "string",
+            "description": "Filter by order source, e.g. \"POS-Order\"."
+          },
+          "customerId": {
+            "type": "string",
+            "description": "Filter to one customer (id from list_customers)."
+          },
+          "projectId": {
+            "type": "string",
+            "description": "Filter to one project (id from list_projects)."
+          },
+          "invoiceScope": {
+            "type": "string",
+            "enum": [
+              "local",
+              "export"
+            ],
+            "description": "Local vs export invoices."
+          },
+          "invoiceKind": {
+            "type": "string",
+            "enum": [
+              "cash",
+              "regular"
+            ],
+            "description": "Cash vs regular (credit) invoices."
+          },
+          "page": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "1-based page (omit for all)."
+          },
+          "limit": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 200,
+            "description": "Page size (max 200)."
+          }
+        },
+        "required": [
+          "startDate",
+          "endDate"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_invoice_status",
+      "title": "Get invoice status",
+      "description": "AR status of one invoice (primary/secondary status, due date, due amount, total). Pass invoiceId, or invoiceNumber (resolved from the invoice list). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "invoiceId": {
+            "type": "string",
+            "description": "The invoice _id (preferred)."
+          },
+          "invoiceNumber": {
+            "type": "string",
+            "description": "Human invoice number, e.g. \"INV2026-00006\" (resolved to an id)."
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_item_summary",
+      "title": "Item summary (stock card)",
+      "description": "Per-item stock-movement ledger over a date range: each movement — date, transaction type (Sales Invoice/Purchase/…), signed quantity, running closing stock, price, reference number — plus the item name and ending stock. Requires itemId (from list_products). NuMetric-computed (Verified). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "itemId": {
+            "type": "string",
+            "description": "The item/product id whose stock movements to return (from list_products)."
+          },
+          "startDate": {
+            "type": "string",
+            "description": "Inclusive period start, YYYY-MM-DD."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Inclusive period end, YYYY-MM-DD."
+          }
+        },
+        "required": [
+          "itemId",
+          "startDate",
+          "endDate"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_kpis",
+      "title": "Financial KPIs",
+      "description": "First-class accounting KPIs for a period: cash runway, current ratio, DSO, DPO, revenue concentration, and unreviewed-transaction count. Each returns its value, raw inputs, and a \"confidence\" (Verified/Guarded) — hedge on any Guarded figure. Note: NuMetric tracks \"reviewed\" (not bank \"reconciled\") status. KPIs the caller lacks scope for return value:null with a note. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "Inclusive period start, YYYY-MM-DD."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Inclusive period end, YYYY-MM-DD."
+          },
+          "kpis": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "runway",
+                "current_ratio",
+                "dso",
+                "dpo",
+                "revenue_concentration",
+                "unreviewed_count"
+              ]
+            },
+            "description": "Subset of KPIs to compute; omit for all."
+          }
+        },
+        "required": [
+          "startDate",
+          "endDate"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_multi_project_profit_loss",
+      "title": "Multi-project P&L",
+      "description": "Profit & loss broken down PER PROJECT for the given projects over a date range: NuMetric-computed income, expense, and net profit per project, plus a combined total across them. Get project ids from list_projects. Figures are computed by the accounting engine (Verified) — do not re-derive them. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "Inclusive period start, YYYY-MM-DD."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Inclusive period end, YYYY-MM-DD."
+          },
+          "projectIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "description": "One or more project ids to break the P&L down by (from list_projects)."
+          }
+        },
+        "required": [
+          "startDate",
+          "endDate",
+          "projectIds"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_payables",
+      "title": "Payables (aging)",
+      "description": "Money we owe: payables aging buckets (firstPhase = current → lastPhase = oldest) with a total. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_receivables",
+      "title": "Receivables (aging + overdue confidence)",
+      "description": "Money owed to us: aging buckets (firstPhase = current → lastPhase = oldest) plus an overdue summary that cross-checks status-based vs due-date aging and returns a \"Verified\" or \"Guarded\" confidence. Treat a Guarded overdue figure as unconfirmed. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_sales_tax",
+      "title": "Sales tax (VAT) report",
+      "description": "Sales-tax / VAT report for a date range: output VAT (tax collected on sales) and input VAT (tax paid on purchases), per tax account, with taxable bases, tax totals, and the net tax payable (output − input). All figures are NuMetric-computed (Verified) — do not re-derive them. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "Inclusive period start, YYYY-MM-DD."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Inclusive period end, YYYY-MM-DD."
+          }
+        },
+        "required": [
+          "startDate",
+          "endDate"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_sales_tax_transactions",
+      "title": "Sales tax transaction detail",
+      "description": "Per-transaction sales-tax (VAT) detail for ONE tax account over a date range: each invoice/bill with its net amount, tax amount, and total. Requires accountId — the tax account id (get it from list_chart_of_accounts). Each row's type is \"Invoice\" (output VAT) or \"Bill\" (input VAT). NuMetric-computed (Verified) — do not re-derive. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "Inclusive period start, YYYY-MM-DD."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Inclusive period end, YYYY-MM-DD."
+          },
+          "accountId": {
+            "type": "string",
+            "description": "The tax account id to report on (from list_chart_of_accounts). Required — the report is per tax account."
+          }
+        },
+        "required": [
+          "startDate",
+          "endDate",
+          "accountId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_source_quantity_report",
+      "title": "Source quantity report",
+      "description": "Units sold per product across non-draft invoices in a date range, filterable by source (orderFrom, customer, project, invoiceScope local/export, invoiceKind cash/regular). Per product: quantity (units), gross line amount (price × qty, before invoice-level discounts/tax), and invoice count. Quantities roll up the engine's invoice line items (NuMetric has no dedicated endpoint for this) — the roll-up is computed here, stated in notes. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "Inclusive period start, YYYY-MM-DD."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Inclusive period end, YYYY-MM-DD."
+          },
+          "orderFrom": {
+            "type": "string",
+            "description": "Filter by order source, e.g. \"POS-Order\"."
+          },
+          "customerId": {
+            "type": "string",
+            "description": "Filter to one customer (id from list_customers)."
+          },
+          "projectId": {
+            "type": "string",
+            "description": "Filter to one project (id from list_projects)."
+          },
+          "invoiceScope": {
+            "type": "string",
+            "enum": [
+              "local",
+              "export"
+            ],
+            "description": "Local vs export invoices."
+          },
+          "invoiceKind": {
+            "type": "string",
+            "enum": [
+              "cash",
+              "regular"
+            ],
+            "description": "Cash vs regular (credit) invoices."
+          }
+        },
+        "required": [
+          "startDate",
+          "endDate"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_storage_overview",
+      "title": "Document storage overview",
+      "description": "The auto-categorized document tree (parentType → documentType with file counts) plus storage usage (total/used/remaining bytes, total files). Use a category's parentType + documentType with list_documents. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "get_transaction",
+      "title": "Get transaction detail",
+      "description": "Fetch one ledger transaction by id, including its full journal lines and the referenced document. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "transactionId": {
+            "type": "string",
+            "description": "The transaction _id."
+          }
+        },
+        "required": [
+          "transactionId"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_bills",
+      "title": "List bills (payables)",
+      "description": "List vendor bills for the connected business (number, vendor, date, status, total, due). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_businesses",
+      "title": "List businesses",
+      "description": "List every NuMetric business on the connected account, flagging which one is currently active and which you have read access to. Call this first if no business is selected: every other tool acts on the ACTIVE business, chosen with select_business. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_cash_invoices",
+      "title": "List cash invoices (with filters)",
+      "description": "List POS cash invoices with optional date range (from/to, YYYY-MM-DD) and exact customer-name filter. Returns a per-customer breakdown + total. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "description": "Inclusive start date, YYYY-MM-DD."
+          },
+          "to": {
+            "type": "string",
+            "description": "Inclusive end date, YYYY-MM-DD."
+          },
+          "customer": {
+            "type": "string",
+            "description": "Exact (case-insensitive) customer name, e.g. \"Guest\"."
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_cashiers",
+      "title": "List cashiers / staff",
+      "description": "List the business's staff/cashiers — name, login email, id, last login. Use the email as the cashierEmail argument for get_cashier_attendance / get_cashier_sales_items / get_cashier_sales_invoices. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_chart_of_accounts",
+      "title": "Chart of accounts",
+      "description": "The business chart of accounts (id, name, type, section, current/non-current classification) grouped by section. NOTE: per-account balances are NOT available on the NuMetric API (the trial-balance engine is not deployed) — the balance field is not authoritative. The chart is flat (no hierarchy) and classification is heuristic (confidence: Guarded). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "description": "Period start, YYYY-MM-DD (reserved for when balances become available)."
+          },
+          "endDate": {
+            "type": "string",
+            "description": "Period end, YYYY-MM-DD."
+          }
+        },
+        "required": [
+          "startDate",
+          "endDate"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_customers",
+      "title": "List customers (with duplicate detection)",
+      "description": "List customers and flag data-quality issues: names mapping to multiple ids (record fragmentation) and guest/walk-in placeholder records. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "duplicatesOnly": {
+            "type": "boolean",
+            "description": "If true, omit the full customer list and return only the duplicate groups + counts."
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_documents",
+      "title": "List documents",
+      "description": "List uploaded documents of one category, grouped by the record they are attached to (invoice/bill/JV/product/…). Each file has name, type, size (bytes), uploader, and date. Requires parentDocType + documentType (from get_storage_overview). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "parentDocType": {
+            "type": "string",
+            "description": "The parent document category, e.g. \"Inventory\", \"Sales\" (from get_storage_overview)."
+          },
+          "documentType": {
+            "type": "string",
+            "description": "The document type within the category, e.g. \"Product\", \"Invoice\" (from get_storage_overview)."
+          }
+        },
+        "required": [
+          "parentDocType",
+          "documentType"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_estimates",
+      "title": "List estimates",
+      "description": "List estimates/quotes for the connected business (number, customer, date, status, total). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_invoices",
+      "title": "List invoices",
+      "description": "List invoices for the connected business (merged general + overdue feeds, deduped and normalized). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_products",
+      "title": "List products",
+      "description": "List inventory products with on-hand, reserved, low-stock flag and inventory value. Set lowStockOnly:true to return only products below their reorder threshold. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "lowStockOnly": {
+            "type": "boolean",
+            "description": "If true, return only products currently below their low-stock threshold."
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_projects",
+      "title": "List projects",
+      "description": "The business's projects (job/cost-centres) — id, name, active flag, description — paginated. Use the project ids with get_multi_project_profit_loss. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "description": "1-based page number (default 1)."
+          },
+          "limit": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 200,
+            "description": "Page size (default 50, max 200)."
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "list_vendors",
+      "title": "List vendors",
+      "description": "List vendors/suppliers for the connected business (name, email, phone, balance). Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "search_transactions",
+      "title": "Search transactions (ledger)",
+      "description": "Search the journal ledger. Server-side filters: date range (from+to together, YYYY-MM-DD), type, category, and reviewed status. NOTE: filtering by account, counterparty, or amount is NOT supported by the NuMetric backend — see the returned \"clientNote\". Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "description": "Inclusive start date YYYY-MM-DD (must be paired with \"to\")."
+          },
+          "to": {
+            "type": "string",
+            "description": "Inclusive end date YYYY-MM-DD (must be paired with \"from\")."
+          },
+          "type": {
+            "type": "string",
+            "description": "Transaction type filter."
+          },
+          "category": {
+            "type": "string",
+            "description": "Transaction category filter."
+          },
+          "reviewed": {
+            "type": "boolean",
+            "description": "true = reviewed only, false = unreviewed only, omit = all."
+          },
+          "page": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+          },
+          "limit": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 500
+          }
+        },
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    },
+    {
+      "name": "select_business",
+      "title": "Select business",
+      "description": "Choose which NuMetric business the session acts on, by id or company name (see list_businesses). The choice persists for the session until changed; all subsequent tools use it. Read-only (no data is modified).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "business": {
+            "type": "string",
+            "description": "The business id or company name to activate (from list_businesses)."
+          }
+        },
+        "required": [
+          "business"
+        ],
+        "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true
+      }
+    }
+  ]
+}
