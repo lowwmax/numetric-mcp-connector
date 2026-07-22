@@ -38,6 +38,132 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "periodType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "accounts": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "openingBalances": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "incomeAndExpense": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "retained": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totalDebit": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalCredit": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "balanced": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -65,6 +191,103 @@
           }
         },
         "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "filters": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "assets": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "byCustodian": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totals": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -112,6 +335,103 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "filters": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "assets": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totals": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -141,6 +461,112 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "billId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "billNumber": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "total": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "paid": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "due": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "dueDate": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "vendor": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -158,6 +584,36 @@
       "inputSchema": {
         "type": "object",
         "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "cashAndBankTotal": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -198,6 +654,93 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "cashierEmail": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sessions": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sessionCount": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalTimeSpent": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -234,6 +777,98 @@
           "cashierEmail"
         ],
         "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "cashierEmail": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "invoices": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totals": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -274,6 +909,99 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "cashierEmail": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "products": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totalQuantity": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalGrossAmount": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "invoiceCount": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -305,6 +1033,99 @@
           "endDate"
         ],
         "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "transactions": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totalDebit": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalCredit": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "balanced": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -340,6 +1161,72 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "fileId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "fileName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "fileType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sizeBytes": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "contentBase64": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "contentReturned": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -371,6 +1258,77 @@
           "referenceId"
         ],
         "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "referenceId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "fileCount": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalBytes": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "zipBase64": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "contentReturned": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "files": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -424,6 +1382,229 @@
           "endDate"
         ],
         "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "income": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expense": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totalIncome": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalExpense": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "netProfit": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {},
+          "raw": {},
+          "asOf": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "assets": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "liabilities": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "equity": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totalAssets": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalLiabilities": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalEquity": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "retainedProfit": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "balanced": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "rows": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totalDebit": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalCredit": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "monthly": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totalInflow": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalOutflow": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "netChange": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "cashPosition": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "error": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "message": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -498,6 +1679,115 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "filters": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "invoices": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totalInvoiceCount": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalPages": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "currentPage": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totals": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -525,6 +1815,112 @@
           }
         },
         "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "invoiceId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "invoiceNumber": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "total": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "paid": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "due": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "dueDate": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "customer": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -563,6 +1959,99 @@
           "endDate"
         ],
         "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "itemId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "itemName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "movements": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "endingStock": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -613,6 +2102,41 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "period": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "kpis": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -655,6 +2179,86 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "projects": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totals": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -674,6 +2278,53 @@
         "properties": {},
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "buckets": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "total": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -691,6 +2342,35 @@
       "inputSchema": {
         "type": "object",
         "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "aging": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "overdue": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -724,6 +2404,81 @@
           "endDate"
         ],
         "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sales": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "purchases": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "netTaxPayable": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -762,6 +2517,93 @@
           "accountId"
         ],
         "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "taxAccountId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "transactions": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalTax": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -825,6 +2667,104 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "period": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "filters": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "products": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totalQuantity": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalGrossAmount": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "invoiceCount": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "raw": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -842,6 +2782,58 @@
       "inputSchema": {
         "type": "object",
         "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "categories": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "storage": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -872,6 +2864,144 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "businessId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "userId": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "ownerId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "referanceId": {},
+          "recordId": {},
+          "projectId": {},
+          "type": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "documentType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "documentNumber": {},
+          "transactionNumber": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "serialNumber": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "date": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "accountId": {},
+          "account": {},
+          "accountName": {},
+          "description": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "category": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "amount": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "notes": {},
+          "journal": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "isReviewed": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "createdAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "updatedAt": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "__v": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "files": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -891,6 +3021,30 @@
         "properties": {},
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "bills": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -908,6 +3062,47 @@
       "inputSchema": {
         "type": "object",
         "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "businesses": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "activeBusinessId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "active": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "note": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -943,6 +3138,75 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalAmount": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "currency": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "dateRange": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "filter": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "byCustomer": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "invoices": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -960,6 +3224,30 @@
       "inputSchema": {
         "type": "object",
         "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "cashiers": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -995,6 +3283,64 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "accounts": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totalsBySection": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "balancesAvailable": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -1018,6 +3364,53 @@
           }
         },
         "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "customers": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "duplicateGroups": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "guestRecordCount": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "hasDuplicates": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -1053,6 +3446,71 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "statement": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "parentDocType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "documentType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "groups": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "fileCount": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalBytes": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -1072,6 +3530,30 @@
         "properties": {},
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "estimates": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -1089,6 +3571,30 @@
       "inputSchema": {
         "type": "object",
         "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "invoices": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -1114,6 +3620,36 @@
           }
         },
         "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "lowStockOnly": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "products": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -1148,6 +3684,48 @@
         "additionalProperties": false,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "projects": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totalProjectCount": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalPages": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "currentPage": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
       "annotations": {
         "readOnlyHint": true,
         "destructiveHint": false,
@@ -1165,6 +3743,30 @@
       "inputSchema": {
         "type": "object",
         "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "vendors": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -1206,15 +3808,70 @@
           },
           "page": {
             "type": "integer",
-            "exclusiveMinimum": 0
+            "exclusiveMinimum": 0,
+            "description": "1-based page number (default 1)."
           },
           "limit": {
             "type": "integer",
             "exclusiveMinimum": 0,
-            "maximum": 500
+            "maximum": 500,
+            "description": "Page size (default 50, max 500)."
           }
         },
         "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "transactions": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totalCount": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalPages": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "currentPage": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "serverFilters": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "clientNote": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
@@ -1243,6 +3900,41 @@
           "business"
         ],
         "additionalProperties": false,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "selected": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "scopes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "note": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "additionalProperties": true,
         "$schema": "http://json-schema.org/draft-07/schema#"
       },
       "annotations": {
