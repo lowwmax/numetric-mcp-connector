@@ -1,9 +1,22 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "xyz.virifi.numetric-mcp/numetric",
+  "title": "NuMetric",
   "description": "Read-only NuMetric.work accounting & ERP data: statements, KPIs, reports, invoices, documents.",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "websiteUrl": "https://numetric.work",
+  "repository": {
+    "url": "https://github.com/lowwmax/numetric-mcp-connector",
+    "source": "github",
+    "id": "1308598327"
+  },
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/lowwmax/numetric-mcp-connector/main/assets/icon-numetric.png",
+      "mimeType": "image/png",
+      "sizes": ["1024x1024"]
+    }
+  ],
   "remotes": [
     {
       "type": "streamable-http",
