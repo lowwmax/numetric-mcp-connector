@@ -3263,7 +3263,7 @@
     {
       "name": "list_chart_of_accounts",
       "title": "Chart of accounts",
-      "description": "The business chart of accounts (id, name, type, section, current/non-current classification) grouped by section. NOTE: per-account balances are NOT available on the NuMetric API (the trial-balance engine is not deployed) — the balance field is not authoritative. The chart is flat (no hierarchy) and classification is heuristic (confidence: Guarded). Read-only.",
+      "description": "The business chart of accounts (id, name, type, section, current/non-current classification) grouped by section, with per-account balances joined live from the trial balance by accountId (confidence: Verified — check the returned balancesAvailable flag). Two caveats, both surfaced in the returned notes: the chart is flat (NuMetric exposes no parent/child account hierarchy), and the current vs non-current classification is a heuristic NuMetric does not state explicitly. Read-only.",
       "inputSchema": {
         "type": "object",
         "properties": {
