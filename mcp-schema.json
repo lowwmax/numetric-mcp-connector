@@ -40,7 +40,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -64,7 +69,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -104,7 +114,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -128,7 +143,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -142,7 +162,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -175,7 +200,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -208,7 +238,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -241,7 +276,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -269,7 +309,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -297,7 +342,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -325,7 +375,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -373,7 +428,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -440,7 +500,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -464,7 +529,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -497,7 +567,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -540,7 +615,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -577,7 +657,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -591,7 +676,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -605,7 +695,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -633,7 +728,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -666,7 +766,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -722,7 +827,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -736,7 +846,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -759,7 +874,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -773,7 +893,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -787,7 +912,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -815,7 +945,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -829,7 +964,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -857,7 +997,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -877,7 +1022,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -905,7 +1055,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -919,7 +1074,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -933,7 +1093,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -953,7 +1118,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -980,7 +1150,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -994,7 +1169,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -1039,7 +1219,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     },
     {
@@ -1062,7 +1247,12 @@
       },
       "annotations": {
         "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
         "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
       }
     }
   ]
