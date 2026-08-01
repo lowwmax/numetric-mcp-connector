@@ -1,6 +1,6 @@
 {
   "server": "numetric-mcp",
-  "instructions": "NuMetric MCP — read-only access to a NuMetric.work account (POS/ERP/accounting).\n\nTENANCY: one connected account can hold SEVERAL businesses, and every data tool acts on the one currently ACTIVE. You never pass a businessId as a tool argument. Instead: call list_businesses to see the account's businesses, then select_business (by id or company name) to choose one; the choice sticks for the session and can be switched anytime. If no business is selected yet, data tools return NO_BUSINESS_SELECTED — pick one first. When the account has exactly one business it is auto-selected. Read numetric://business/profile for the active business (or the list, when none is selected). Note: read scopes are per-business, so switching businesses can change what you're permitted to read.\n\nREADS are safe and free to call. Many results carry a \"confidence\" field — \"Verified\" means the figure is cross-checked/live; \"Guarded\" means it may be stale or divergent, so report it as unconfirmed and do NOT assert it as fact. Notably: get_receivables cross-checks status-based vs aging overdue totals; get_financial_statement profit_loss/balance_sheet are snapshot-sourced (Guarded) while trial_balance is live (Verified); get_kpis returns per-KPI confidence and inputs. Tools you lack permission for return a SCOPE_REQUIRED error — your granted read scopes reflect your NuMetric permissions.\n\nSOURCE OF TRUTH: NuMetric's accounting engine is authoritative — it is the single source of truth for every figure these tools return (account balances, trial balance, P&L, balance sheet, cash flow, KPIs). Those figures are computed by NuMetric's ledger and handed to you ready-made: you never need to reconstruct accounting logic, and you must NOT re-derive totals from raw transactions or replace an engine figure with your own recomputation. Report the engine's numbers as its findings. You may think, analyse, and interpret on top of them — but your own accounting reasoning must not conflict with, contradict, or silently override those findings. If your calculation disagrees with an engine figure, treat the engine as correct and surface the discrepancy as a question, not a correction. (A \"Guarded\" figure is unconfirmed — flag it as such, but still do not overwrite it with your own math.)\n\nThis server exposes read tools only. It cannot record payments, approve invoices, create/update documents, or delete anything — there are no write tools to call.\n\nDATA QUALITY: list_customers flags duplicate/guest-fragmented records; surface those caveats rather than treating counts as clean.",
+  "instructions": "NuMetric MCP — read-only access to a NuMetric.work account (POS/ERP/accounting).\n\nTENANCY: one connected account can hold SEVERAL businesses, and every data tool acts on the one currently ACTIVE. You never pass a businessId as a tool argument. Instead: call list_businesses to see the account's businesses, then select_business (by id or company name) to choose one; the choice sticks for the session and can be switched anytime. If no business is selected yet, data tools return NO_BUSINESS_SELECTED — pick one first. When the account has exactly one business it is auto-selected. Read numetric://business/profile for the active business (or the list, when none is selected). Note: read scopes are per-business, so switching businesses can change what you're permitted to read.\n\nREADS are safe and free to call. Many results carry a \"confidence\" field — \"Verified\" means the figure is cross-checked/live; \"Guarded\" means it may be stale or divergent, so report it as unconfirmed and do NOT assert it as fact. Notably: get_receivables cross-checks status-based vs aging overdue totals; get_financial_statement profit_loss/balance_sheet are snapshot-sourced (Guarded) while trial_balance is live (Verified); get_kpis returns per-KPI confidence and inputs. Tools you lack permission for return a SCOPE_REQUIRED error — your granted read scopes reflect your NuMetric permissions.\n\nSOURCE OF TRUTH: NuMetric's accounting engine is authoritative — it is the single source of truth for every figure these tools return (account balances, trial balance, P&L, balance sheet, cash flow, KPIs). Those figures are computed by NuMetric's ledger and handed to you ready-made: you never need to reconstruct accounting logic, and you must NOT re-derive totals from raw transactions or replace an engine figure with your own recomputation. Report the engine's numbers as its findings. You may think, analyse, and interpret on top of them — but your own accounting reasoning must not conflict with, contradict, or silently override those findings. If your calculation disagrees with an engine figure, treat the engine as correct and surface the discrepancy as a question, not a correction. (A \"Guarded\" figure is unconfirmed — flag it as such, but still do not overwrite it with your own math.)\n\nACCOUNTING SIGNS — read this before interpreting ANY signed figure. NuMetric uses two opposite conventions, and confusing them inverts \"we owe\" into \"we are owed\":\n(1) LEDGER-SIGNED (balance = debit − credit) — used by trial_balance, general_ledger and list_chart_of_accounts. Assets/Expenses are POSITIVE when normal; Liabilities/Equity/Income are NEGATIVE when normal. A payable holding real unpaid bills is negative here; a POSITIVE payable is the abnormal case (an overpayment/advance).\n(2) PRESENTATION-MAGNITUDE (every line a positive magnitude, the section carries the meaning) — used by balance_sheet and profit_loss. This is why totalAssets ≈ totalLiabilities + totalEquity with all three positive.\nThe same payable is therefore NEGATIVE in the trial balance and POSITIVE on the balance sheet. That is presentation, not a contradiction — do not \"discover\" an inversion bug from it.\nNEVER infer owed-vs-prepaid from a bare sign. Tools that expose a party balance decode it for you: list_vendors returns direction (\"we_owe\" | \"they_owe\" | \"settled\") with non-negative amountWeOwe / amountTheyOwe, and account-level tools return magnitude + side + isNormalSide. Use those fields and report the decoded meaning; treat the raw signed `balance` as an internal detail. Every such payload also carries signConvention and notes — read them. Full reference: the numetric://accounting/conventions resource.\nAGED IS NOT TOTAL. get_payables and get_receivables each return TWO things: a total-owed summary (get_payables.outstanding / get_receivables.overdue, both with outstandingTotal) and aging buckets (scope:\"aged_only\") covering only what has crossed NuMetric's aging threshold. Aging is a SUBSET of outstanding, so an aging total BELOW the outstanding total — including 0 against a large Accounts Payable balance, meaning every bill is still current — is expected and healthy, not a discrepancy to report. For \"how much do we owe\" read outstanding.outstandingTotal; for \"how much is overdue\" read overdueOutstandingTotal or the buckets. NEVER report \"no payables\"/\"no receivables\" from an aging total alone. The subset check is done for you in outstanding.reconciliation.agedPayables, which degrades only if aged EXCEEDS outstanding — the one genuinely impossible result.\nIf figures genuinely disagree after accounting for that, do NOT pick whichever supports your reading and do not silently reconcile them: the Accounts Payable / Accounts Receivable account in get_financial_statement is authoritative, and the disagreement itself is a finding to surface to the user.\n\nThis server exposes read tools only. It cannot record payments, approve invoices, create/update documents, or delete anything — there are no write tools to call.\n\nDATA QUALITY: list_customers flags duplicate/guest-fragmented records; surface those caveats rather than treating counts as clean.",
   "generatedFrom": "live tools/list (read-only build)",
   "toolCount": 38,
   "tools": [
@@ -464,12 +464,6 @@
       "outputSchema": {
         "type": "object",
         "properties": {
-          "statement": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
           "billId": {
             "type": [
               "string",
@@ -488,79 +482,28 @@
               "null"
             ]
           },
-          "total": {
-            "type": [
-              "number",
-              "null"
-            ]
-          },
-          "paid": {
-            "type": [
-              "number",
-              "null"
-            ]
-          },
-          "due": {
-            "type": [
-              "number",
-              "null"
-            ]
-          },
-          "currency": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
           "dueDate": {
             "type": [
               "string",
               "null"
             ]
           },
-          "vendor": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": {}
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "source": {
+          "dueAmount": {
             "type": [
-              "string",
+              "number",
               "null"
             ]
           },
-          "confidence": {
+          "totalAmount": {
             "type": [
-              "string",
+              "number",
               "null"
             ]
           },
-          "notes": {
-            "anyOf": [
-              {
-                "type": "array",
-                "items": {}
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "raw": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": {}
-              },
-              {
-                "type": "null"
-              }
+          "vendorName": {
+            "type": [
+              "string",
+              "null"
             ]
           }
         },
@@ -1275,19 +1218,25 @@
               "null"
             ]
           },
-          "fileCount": {
+          "fileName": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "fileType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sizeBytes": {
             "type": [
               "number",
               "null"
             ]
           },
-          "totalBytes": {
-            "type": [
-              "number",
-              "null"
-            ]
-          },
-          "zipBase64": {
+          "contentBase64": {
             "type": [
               "string",
               "null"
@@ -1297,17 +1246,6 @@
             "type": [
               "boolean",
               "null"
-            ]
-          },
-          "files": {
-            "anyOf": [
-              {
-                "type": "array",
-                "items": {}
-              },
-              {
-                "type": "null"
-              }
             ]
           },
           "source": {
@@ -1344,7 +1282,7 @@
     {
       "name": "get_financial_statement",
       "title": "Financial statement",
-      "description": "Accrual-basis financial statement: statement = \"profit_loss\" (account-based income/expense + net profit), \"balance_sheet\" (assets/liabilities/equity as of endDate), \"trial_balance\" (per-account debit/credit/balance), \"general_ledger\" (per-account transaction detail with running balance — requires accountId), or \"cash_flow\" (monthly net cash in/out + net change for the year of endDate). Each carries a Verified/Guarded confidence. Read-only.",
+      "description": "Accrual-basis financial statement: statement = \"profit_loss\" (account-based income/expense + net profit), \"balance_sheet\" (assets/liabilities/equity as of endDate), \"trial_balance\" (per-account debit/credit/balance), \"general_ledger\" (per-account transaction detail with running balance — requires accountId), or \"cash_flow\" (monthly net cash in/out + net change for the year of endDate). Each carries a Verified/Guarded confidence and a `signConvention`. SIGNS DIFFER BY STATEMENT: trial_balance and general_ledger are ledger-signed (debit − credit, so a normal liability/income account is NEGATIVE and trial_balance rows expose magnitude/side/isNormalSide), while balance_sheet and profit_loss are presentation-magnitude (every line positive, the section carries the meaning). The same payable is therefore negative in trial_balance and positive on balance_sheet — that is presentation, not a contradiction. This tool is the authority when a subledger or aging figure disagrees. Read-only.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -1524,6 +1462,12 @@
           "balanced": {
             "type": [
               "boolean",
+              "null"
+            ]
+          },
+          "signConvention": {
+            "type": [
+              "string",
               "null"
             ]
           },
@@ -1820,12 +1764,6 @@
       "outputSchema": {
         "type": "object",
         "properties": {
-          "statement": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
           "invoiceId": {
             "type": [
               "string",
@@ -1838,31 +1776,13 @@
               "null"
             ]
           },
-          "status": {
+          "primaryStatus": {
             "type": [
               "string",
               "null"
             ]
           },
-          "total": {
-            "type": [
-              "number",
-              "null"
-            ]
-          },
-          "paid": {
-            "type": [
-              "number",
-              "null"
-            ]
-          },
-          "due": {
-            "type": [
-              "number",
-              "null"
-            ]
-          },
-          "currency": {
+          "secondaryStatus": {
             "type": [
               "string",
               "null"
@@ -1874,49 +1794,22 @@
               "null"
             ]
           },
-          "customer": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": {}
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "source": {
+          "dueAmount": {
             "type": [
-              "string",
+              "number",
               "null"
             ]
           },
-          "confidence": {
+          "totalAmount": {
             "type": [
-              "string",
+              "number",
               "null"
             ]
           },
-          "notes": {
-            "anyOf": [
-              {
-                "type": "array",
-                "items": {}
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "raw": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": {}
-              },
-              {
-                "type": "null"
-              }
+          "customerName": {
+            "type": [
+              "string",
+              "null"
             ]
           }
         },
@@ -2271,8 +2164,8 @@
     },
     {
       "name": "get_payables",
-      "title": "Payables (aging)",
-      "description": "Money we owe: payables aging buckets (firstPhase = current → lastPhase = oldest) with a total. Read-only.",
+      "title": "Payables (total owed + aging)",
+      "description": "Money we owe, both ways round. `outstanding` answers \"how much do we owe in total\" (outstandingTotal across all bills, plus the overdue slice, unpaid count, and a Verified/Guarded confidence). `aging` answers \"how much of it has aged\" — buckets from firstPhase (newest aged) to lastPhase (oldest), scope \"aged_only\", covering ONLY what has crossed NuMetric's aging threshold. Aging is a SUBSET of outstanding, so aging below the total (including 0 against a large balance, meaning every bill is current) is expected and healthy — never report \"no payables\" from the aging figure. Both are unsigned magnitudes, not ledger-signed. The cross-check is in outstanding.reconciliation.agedPayables. Read-only.",
       "inputSchema": {
         "type": "object",
         "properties": {},
@@ -2281,19 +2174,7 @@
       "outputSchema": {
         "type": "object",
         "properties": {
-          "kind": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "currency": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "buckets": {
+          "aging": {
             "anyOf": [
               {
                 "type": "object",
@@ -2304,13 +2185,7 @@
               }
             ]
           },
-          "total": {
-            "type": [
-              "number",
-              "null"
-            ]
-          },
-          "raw": {
+          "outstanding": {
             "anyOf": [
               {
                 "type": "object",
@@ -2338,7 +2213,7 @@
     {
       "name": "get_receivables",
       "title": "Receivables (aging + overdue confidence)",
-      "description": "Money owed to us: aging buckets (firstPhase = current → lastPhase = oldest) plus an overdue summary that cross-checks status-based vs due-date aging and returns a \"Verified\" or \"Guarded\" confidence. Treat a Guarded overdue figure as unconfirmed. Read-only.",
+      "description": "Money owed to us: AGED receivables buckets (firstPhase = newest aged → lastPhase = oldest) plus an overdue summary that cross-checks status-based vs due-date aging and returns a \"Verified\" or \"Guarded\" confidence. The aging buckets are scope: \"aged_only\" — only what has crossed NuMetric's aging threshold, a SUBSET of total outstanding — so use `overdue.outstandingTotal` for the total owed to us and the buckets for how much of it is overdue. Aged below outstanding is expected; only aged EXCEEDING outstanding is a data error. Treat a Guarded overdue figure as unconfirmed. Read-only.",
       "inputSchema": {
         "type": "object",
         "properties": {},
@@ -2539,7 +2414,7 @@
               }
             ]
           },
-          "taxAccountId": {
+          "accountId": {
             "type": [
               "string",
               "null"
@@ -2556,13 +2431,25 @@
               }
             ]
           },
-          "count": {
+          "totalAmount": {
             "type": [
               "number",
               "null"
             ]
           },
           "totalTax": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "totalWithTax": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "count": {
             "type": [
               "number",
               "null"
@@ -2896,9 +2783,24 @@
               "null"
             ]
           },
-          "referanceId": {},
+          "referanceId": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "recordId": {},
-          "projectId": {},
+          "projectId": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
           "type": {
             "type": [
               "string",
@@ -3263,7 +3165,7 @@
     {
       "name": "list_chart_of_accounts",
       "title": "Chart of accounts",
-      "description": "The business chart of accounts (id, name, type, section, current/non-current classification) grouped by section, with per-account balances joined live from the trial balance by accountId (confidence: Verified — check the returned balancesAvailable flag). Two caveats, both surfaced in the returned notes: the chart is flat (NuMetric exposes no parent/child account hierarchy), and the current vs non-current classification is a heuristic NuMetric does not state explicitly. Read-only.",
+      "description": "The business chart of accounts (id, name, type, section, current/non-current classification) grouped by section, with per-account balances joined live from the trial balance by accountId (confidence: Verified — check the returned balancesAvailable flag). SIGNS: balances are ledger-signed (debit − credit), so Liabilities/Equity/Income are NEGATIVE when normal and totalsBySection is negative for those sections — use each account's unsigned `magnitude` plus `side`/`isNormalSide` rather than reading the sign, and see `abnormalSideAccounts` for balances sitting opposite their natural side. Two further caveats, both in the returned notes: the chart is flat (no parent/child hierarchy), and the current vs non-current classification is a heuristic. Read-only.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -3318,6 +3220,23 @@
             "type": [
               "boolean",
               "null"
+            ]
+          },
+          "signConvention": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "abnormalSideAccounts": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
             ]
           },
           "confidence": {
@@ -3738,8 +3657,8 @@
     },
     {
       "name": "list_vendors",
-      "title": "List vendors",
-      "description": "List vendors/suppliers for the connected business (name, email, phone, balance). Read-only.",
+      "title": "List vendors (with AP balance decoded)",
+      "description": "List vendors/suppliers with their accounts-payable position DECODED, so the sign never has to be guessed: each vendor carries direction (\"we_owe\" | \"they_owe\" | \"settled\") plus non-negative amountWeOwe / amountTheyOwe, and the response totals both. The raw `balance` is ledger-signed (negative = unpaid bills we owe; positive = an overpayment the vendor owes us) — read the decoded fields, not the sign. Note this is the opposite sign to the same payable on the balance sheet, where liabilities print positive; that is presentation, not a contradiction. Read-only.",
       "inputSchema": {
         "type": "object",
         "properties": {},
@@ -3755,6 +3674,40 @@
             ]
           },
           "vendors": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "totals": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "signConvention": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "balanceSource": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
             "anyOf": [
               {
                 "type": "array",

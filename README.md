@@ -94,7 +94,7 @@ you can switch anytime. Single-business accounts are selected automatically.
 
 | Tool | Returns |
 | --- | --- |
-| `list_chart_of_accounts` | Chart of accounts with live computed balances and classification |
+| `list_chart_of_accounts` | Chart of accounts with live computed balances and classification. Balances are ledger-signed (`debit − credit`); each row carries `magnitude`/`side`/`isNormalSide` |
 | `search_transactions` | Ledger search by date, type, category, reviewed status |
 | `get_transaction` | One transaction with its full journal lines |
 | `get_daily_transactions` | The general journal for a period (debits = credits) |
@@ -125,7 +125,7 @@ you can switch anytime. Single-business accounts are selected automatically.
 | `get_receivables` | AR aging with overdue confidence |
 | `list_bills` | Purchase bills |
 | `get_bill_status` | AP status of one bill |
-| `get_payables` | AP aging |
+| `get_payables` | Total owed **plus** AP aging. `outstanding.outstandingTotal` is what you owe; `aging` covers only the aged subset |
 | `list_customers` | Customers, with duplicate detection |
 
 </details>
