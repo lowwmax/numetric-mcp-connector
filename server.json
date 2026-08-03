@@ -3,7 +3,7 @@
   "name": "xyz.virifi.numetric-mcp/numetric",
   "title": "NuMetric",
   "description": "Read-only NuMetric.work accounting & ERP data: statements, KPIs, reports, invoices, documents.",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "websiteUrl": "https://numetric.work",
   "repository": {
     "url": "https://github.com/lowwmax/numetric-mcp-connector",

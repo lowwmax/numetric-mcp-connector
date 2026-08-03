@@ -203,7 +203,7 @@ you can switch anytime. Single-business accounts are selected automatically.
 | --- | --- |
 | `list_businesses` | Businesses on your account |
 | `select_business` | Choose which business to work on |
-| `get_subscription` | Your subscription and what it includes: the plan you are on, your effective limits, how much of your transaction and seat allowance is left, which capabilities are available, per-business feature toggles, and which tools your permissions allow |
+| `get_subscription` | Your subscription and what it includes: the plan you are on, your effective limits, how much of your transaction and seat allowance is left, who has access to the account, which capabilities are available, per-business feature toggles, and which tools your permissions allow |
 
 </details>
 
