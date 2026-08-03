@@ -2211,138 +2211,6 @@
       }
     },
     {
-      "name": "get_plan",
-      "title": "Subscription plan, add-ons and what is enabled",
-      "description": "What this account is entitled to, in four parts: `plan` (name, status, expiry, whether it is enabled) with the plan's `limits` joined live from the catalogue; `addOns` — each add-on with an explicit `enabled` boolean plus why it is off (canceled / expired / removed); `businessFeatures` — per-business toggles (sales tax, SMS, transaction lock, webhooks, payment gateway); and `access` — the caller's module permissions and exactly which MCP tools their scopes allow. IMPORTANT: plan and add-on entitlements are a SNAPSHOT taken when the user authenticated (NuMetric exposes no route to re-read them), so they carry `confidence: \"Guarded\"` and an `asOf` — report them as of that time and say that reconnecting refreshes them. Limits are live (Verified). Read-only.",
-      "inputSchema": {
-        "type": "object",
-        "properties": {},
-        "$schema": "http://json-schema.org/draft-07/schema#"
-      },
-      "outputSchema": {
-        "type": "object",
-        "properties": {
-          "plan": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": {}
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "limits": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": {}
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "limitsResolved": {
-            "type": [
-              "boolean",
-              "null"
-            ]
-          },
-          "addOns": {
-            "anyOf": [
-              {
-                "type": "array",
-                "items": {}
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "addOnsEnabled": {
-            "anyOf": [
-              {
-                "type": "array",
-                "items": {}
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "addOnsDisabled": {
-            "anyOf": [
-              {
-                "type": "array",
-                "items": {}
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "businessFeatures": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": {}
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "access": {
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": {}
-              },
-              {
-                "type": "null"
-              }
-            ]
-          },
-          "confidence": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "asOf": {
-            "type": [
-              "string",
-              "null"
-            ]
-          },
-          "notes": {
-            "anyOf": [
-              {
-                "type": "array",
-                "items": {}
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        },
-        "additionalProperties": true,
-        "$schema": "http://json-schema.org/draft-07/schema#"
-      },
-      "annotations": {
-        "readOnlyHint": true,
-        "destructiveHint": false,
-        "idempotentHint": true,
-        "openWorldHint": true
-      },
-      "execution": {
-        "taskSupport": "forbidden"
-      }
-    },
-    {
       "name": "get_receivables",
       "title": "Receivables (aging + overdue confidence)",
       "description": "Money owed to us: AGED receivables buckets (firstPhase = newest aged → lastPhase = oldest) plus an overdue summary that cross-checks status-based vs due-date aging and returns a \"Verified\" or \"Guarded\" confidence. The aging buckets are scope: \"aged_only\" — only what has crossed NuMetric's aging threshold, a SUBSET of total outstanding — so use `overdue.outstandingTotal` for the total owed to us and the buckets for how much of it is overdue. Aged below outstanding is expected; only aged EXCEEDING outstanding is a data error. Treat a Guarded overdue figure as unconfirmed. Read-only.",
@@ -2835,6 +2703,138 @@
             ]
           },
           "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "idempotentHint": true,
+        "openWorldHint": true
+      },
+      "execution": {
+        "taskSupport": "forbidden"
+      }
+    },
+    {
+      "name": "get_subscription",
+      "title": "Subscription, add-ons and what is enabled",
+      "description": "What this account is subscribed to. `subscription` is the ONE product the customer pays for (Business-Unlimited, Retail-Core, …) with its price, status and expiry — that price is the TOTAL for the account. `includes` lists the capabilities that come WITH that subscription (Payroll, CRM, Inventory, …), each with an `available` boolean; `unavailable` is the short list of what is off. These are NOT separate purchases: never present them as add-ons or modules, never attach prices to them, and never sum anything into a combined total. `limits` are the effective ceilings the subscription confers (transactions, storage, users, businesses, stores); a null limit is UNKNOWN, never 0. `businessFeatures` covers per-business toggles (sales tax, SMS, transaction lock, webhooks, payment gateway), and `access` gives the caller's module permissions and which MCP tools their scopes allow. IMPORTANT: subscription entitlements are a SNAPSHOT taken when the user authenticated (NuMetric exposes no route to re-read them), so they carry `confidence: \"Guarded\"` and an `asOf` — report them as of that time and say that reconnecting refreshes them. Read-only.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "subscription": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "limits": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "limitsResolved": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "includes": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "unavailable": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "usage": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "businessFeatures": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "access": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "confidence": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "asOf": {
             "type": [
               "string",
               "null"

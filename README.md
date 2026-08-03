@@ -203,7 +203,7 @@ you can switch anytime. Single-business accounts are selected automatically.
 | --- | --- |
 | `list_businesses` | Businesses on your account |
 | `select_business` | Choose which business to work on |
-| `get_plan` | Your subscription plan and its limits, which add-ons are enabled (and why any are not), per-business feature toggles, and which tools your permissions allow |
+| `get_subscription` | Your subscription and what it includes: the plan you are on, your effective limits, how much of your transaction and seat allowance is left, which capabilities are available, per-business feature toggles, and which tools your permissions allow |
 
 </details>
 
@@ -221,8 +221,10 @@ Every computed figure carries a `confidence` value:
 
 - **Verified** — the figure comes straight from NuMetric's accounting engine and reconciles.
 - **Guarded** — NuMetric flagged it as possibly stale or unbalanced, or it is a snapshot rather than
-  a live read. Your plan and add-on entitlements are always Guarded: NuMetric provides no way to
-  re-read them, so they reflect the moment you connected and refresh when you reconnect.
+  a live read. Your subscription entitlements are always Guarded: NuMetric provides no way to
+  re-read them, so they reflect the moment you connected and refresh when you reconnect. Usage
+  figures are the exception worth knowing about — seat counts come from NuMetric directly, while
+  the transaction count is measured from your ledger and is reported with its basis.
 
 The server instructs connecting assistants to hedge on Guarded figures rather than present them as
 final. Claude reports what your books say; it does not recompute your accounting itself.
