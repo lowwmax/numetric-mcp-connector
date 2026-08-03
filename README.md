@@ -19,7 +19,7 @@
 
 A [Model Context Protocol](https://modelcontextprotocol.io) server for the
 [NuMetric.work](https://numetric.work) POS / ERP / accounting platform. It exposes your live business
-data as **38 read-only tools**, so an AI assistant answers from your actual books instead of guessing.
+data as **39 read-only tools**, so an AI assistant answers from your actual books instead of guessing.
 
 It never creates, edits, or deletes anything.
 
@@ -197,16 +197,17 @@ you can switch anytime. Single-business accounts are selected automatically.
 </details>
 
 <details>
-<summary><b>Session</b> (2)</summary>
+<summary><b>Account &amp; session</b> (3)</summary>
 
 | Tool | Returns |
 | --- | --- |
 | `list_businesses` | Businesses on your account |
 | `select_business` | Choose which business to work on |
+| `get_plan` | Your subscription plan and its limits, which add-ons are enabled (and why any are not), per-business feature toggles, and which tools your permissions allow |
 
 </details>
 
-Machine-readable schema for all 38: [`mcp-schema.json`](mcp-schema.json).
+Machine-readable schema for all 39: [`mcp-schema.json`](mcp-schema.json).
 
 ## Read-only by design
 
@@ -219,7 +220,9 @@ clients that honor the hint.
 Every computed figure carries a `confidence` value:
 
 - **Verified** — the figure comes straight from NuMetric's accounting engine and reconciles.
-- **Guarded** — NuMetric flagged it as possibly stale or unbalanced.
+- **Guarded** — NuMetric flagged it as possibly stale or unbalanced, or it is a snapshot rather than
+  a live read. Your plan and add-on entitlements are always Guarded: NuMetric provides no way to
+  re-read them, so they reflect the moment you connected and refresh when you reconnect.
 
 The server instructs connecting assistants to hedge on Guarded figures rather than present them as
 final. Claude reports what your books say; it does not recompute your accounting itself.
