@@ -303,7 +303,7 @@
     {
       "name": "get_asset_report",
       "title": "Fixed-asset (depreciation) report",
-      "description": "Fixed-asset register with depreciation: per asset — name, type, serial, status, assignee, location, purchase date/value, depreciation %, accumulated depreciation, period depreciation, and net book value — plus totals. Optional filters: isAuto (auto-depreciation only), assetAccountId (fixed-asset account), assignedToUserId, location. NuMetric-computed depreciation (Verified) — do not re-derive. Read-only.",
+      "description": "Fixed assets. `register` is the asset list NuMetric's own Assets Report shows (account-based, reconciles to the balance sheet by class) — name, type, GL account, cost, purchase date, and a depreciation RATE (a percent, not a charge). `schedule` and the depreciation totals come from NuMetric's separate PURCHASE register, which computes period/accumulated depreciation and net book value server-side. THE TWO ARE DIFFERENT POPULATIONS: when they do not reconcile, the depreciation figures are null and `reconciliation` says why — read the period charge from the Depreciation Expense account in get_financial_statement instead, and never report 0 as the depreciation. Confidence is Verified only when the schedule actually covers the register. Note the register ignores startDate/endDate. Optional filters: isAuto, assetAccountId, assignedToUserId, location. Read-only.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -366,7 +366,24 @@
               }
             ]
           },
-          "assets": {
+          "register": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "registerTotal": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "schedule": {
             "anyOf": [
               {
                 "type": "array",
@@ -378,6 +395,17 @@
             ]
           },
           "totals": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": {}
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reconciliation": {
             "anyOf": [
               {
                 "type": "object",

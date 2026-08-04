@@ -179,7 +179,7 @@ you can switch anytime. Single-business accounts are selected automatically.
 
 | Tool | Returns |
 | --- | --- |
-| `get_asset_report` | Fixed-asset register with depreciation |
+| `get_asset_report` | Your fixed-asset register — name, type, GL account, cost and depreciation rate — reconciled against NuMetric's depreciation schedule. Depreciation totals are reported only when the two cover the same assets, and withheld (null, never zero) when they do not |
 | `get_asset_custody_report` | Asset custody by holder |
 
 </details>
