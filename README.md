@@ -212,8 +212,9 @@ Machine-readable schema for all 39: [`mcp-schema.json`](mcp-schema.json).
 ## Read-only by design
 
 Every tool carries `readOnlyHint: true`. There is no payment, transfer, trade, create, edit, or delete
-tool in this server — not gated, not present. Read-only tools run without per-call confirmation in
-clients that honor the hint.
+tool in this server — not gated, not present. That is meant literally: as of 0.9.0 the write code was
+removed from the deployed server rather than left behind a feature flag, so there is no configuration
+that turns it on. Read-only tools run without per-call confirmation in clients that honor the hint.
 
 ## Verified vs. Guarded
 
