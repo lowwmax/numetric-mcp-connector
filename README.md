@@ -19,7 +19,7 @@
 
 A [Model Context Protocol](https://modelcontextprotocol.io) server for the
 [NuMetric.work](https://numetric.work) POS / ERP / accounting platform. It exposes your live business
-data as **39 read-only tools**, so an AI assistant answers from your actual books instead of guessing.
+data as **read-only tools**, so an AI assistant answers from your actual books instead of guessing.
 
 It never creates, edits, or deletes anything.
 
@@ -90,7 +90,7 @@ you can switch anytime. Single-business accounts are selected automatically.
 ## Tools
 
 <details>
-<summary><b>Accounting spine</b> (6)</summary>
+<summary><b>Accounting spine</b> (8)</summary>
 
 | Tool | Returns |
 | --- | --- |
@@ -100,16 +100,19 @@ you can switch anytime. Single-business accounts are selected automatically.
 | `get_daily_transactions` | The general journal for a period (debits = credits) |
 | `get_financial_statement` | P&L, balance sheet, trial balance, cash flow |
 | `get_account_transactions_report` | Per-account transaction detail for a period |
+| `get_audit_trail` | Who created or changed each transaction and when, with filters for date, category, type, reviewed status, creator, editor, project, amount and free text. Requires the audit-trail permission on your NuMetric account |
+| `get_transaction_activity` | The change history of one transaction — every event with who made it, when, and which fields moved from what to what |
 
 </details>
 
 <details>
-<summary><b>Analysis & KPIs</b> (2)</summary>
+<summary><b>Analysis & KPIs</b> (3)</summary>
 
 | Tool | Returns |
 | --- | --- |
 | `get_kpis` | Cash runway, current ratio, DSO, DPO, revenue concentration, unreviewed count |
 | `get_cash_position` | Cash and bank balances across accounts |
+| `get_net_movement` | Per-account net movement across a calendar year, by month or by quarter — how each account moved period over period rather than where it ended. Ledger-signed (`debit − credit`), so income and liability accounts move negative as they grow |
 
 </details>
 
@@ -207,7 +210,7 @@ you can switch anytime. Single-business accounts are selected automatically.
 
 </details>
 
-Machine-readable schema for all 39: [`mcp-schema.json`](mcp-schema.json).
+Machine-readable schema for every tool: [`mcp-schema.json`](mcp-schema.json).
 
 ## Read-only by design
 
