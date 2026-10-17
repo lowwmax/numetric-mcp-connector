@@ -34,6 +34,7 @@ https://numetric-mcp.virifi.xyz/mcp
 - *"List overdue invoices and total receivables."*
 - *"How much sales tax did I collect vs. pay this quarter?"*
 - *"Break down profit by project."*
+- *"Which customers subscribe to my monthly plan, and who cancelled?"*
 - *"What documents are attached to invoice INV-2026-0007?"*
 
 ## Install
@@ -117,7 +118,7 @@ you can switch anytime. Single-business accounts are selected automatically.
 </details>
 
 <details>
-<summary><b>Sales, receivables & payables</b> (9)</summary>
+<summary><b>Sales, receivables & payables</b> (10)</summary>
 
 | Tool | Returns |
 | --- | --- |
@@ -130,6 +131,7 @@ you can switch anytime. Single-business accounts are selected automatically.
 | `get_bill_status` | AP status of one bill |
 | `get_payables` | Total owed **plus** AP aging. `outstanding.outstandingTotal` is what you owe; `aging` covers only the aged subset |
 | `list_customers` | Customers, with duplicate detection |
+| `list_customer_subscriptions` | Subscription plans you sell to your customers: each plan's price and billing frequency, subscriber counts (active / suspended / cancelled), who is subscribed, and what has been invoiced |
 
 </details>
 
@@ -206,7 +208,7 @@ you can switch anytime. Single-business accounts are selected automatically.
 | --- | --- |
 | `list_businesses` | Businesses on your account |
 | `select_business` | Choose which business to work on |
-| `get_subscription` | Your subscription and what it includes: the plan you are on, your effective limits, how much of your transaction and seat allowance is left, who has access to the account, which capabilities are available, per-business feature toggles, and which tools your permissions allow |
+| `get_subscription` | Your own NuMetric plan (what you pay NuMetric, not your customers' subscriptions) and what it includes: the plan you are on, your effective limits, how much of your transaction and seat allowance is left, who has access to the account, which capabilities are available, per-business feature toggles, and which tools your permissions allow |
 
 </details>
 
