@@ -3887,7 +3887,7 @@
     {
       "name": "list_customer_subscriptions",
       "title": "Customer subscriptions (plans this business sells)",
-      "description": "Recurring subscription plans this business SELLS TO ITS CUSTOMERS (NuMetric Digital Plans) and the customers subscribed to each: per plan the name, code, billing frequency, price per cycle, subscriber counts by status (active / suspended / cancelled), the subscriber list (customer name, status, start date), and what has been invoiced against it. Use this for \"who subscribes to my plans\", \"how many active subscribers\", \"which customers cancelled\". This is NOT the business's own NuMetric plan — that is get_subscription. Optional planId (from a previous call) narrows to one plan; optional status filters the subscriber list (counts always cover everyone). Read-only.",
+      "description": "Recurring subscription plans this business SELLS TO ITS CUSTOMERS (NuMetric Digital Plans) and the customers subscribed to each: every plan including ones hidden from the digital store (flagged `hidden`), and per plan the name, code, renewal cycle (every N days/weeks/months/years, until cancelled or for a fixed number of payments), price per cycle, subscriber counts by status (active / suspended / cancelled / completed — a fixed-payment subscription that has taken all its payments), the subscriber list (customer name, status, start date), and what has been invoiced against it. Use this for \"who subscribes to my plans\", \"how many active subscribers\", \"which customers cancelled\". This is NOT the business's own NuMetric plan — that is get_subscription. Optional planId (from a previous call) narrows to one plan; optional status filters the subscriber list (counts always cover everyone). Read-only.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -3900,7 +3900,8 @@
             "enum": [
               "active",
               "suspended",
-              "cancelled"
+              "cancelled",
+              "completed"
             ],
             "description": "Only list subscribers in this status."
           }

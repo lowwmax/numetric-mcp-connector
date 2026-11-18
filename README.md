@@ -131,7 +131,7 @@ you can switch anytime. Single-business accounts are selected automatically.
 | `get_bill_status` | AP status of one bill |
 | `get_payables` | Total owed **plus** AP aging. `outstanding.outstandingTotal` is what you owe; `aging` covers only the aged subset |
 | `list_customers` | Customers, with duplicate detection |
-| `list_customer_subscriptions` | Subscription plans you sell to your customers: each plan's price and billing frequency, subscriber counts (active / suspended / cancelled), who is subscribed, and what has been invoiced |
+| `list_customer_subscriptions` | Subscription plans you sell to your customers, including ones hidden from your digital store: each plan's price and renewal cycle, subscriber counts (active / suspended / cancelled / completed), who is subscribed, and what has been invoiced |
 
 </details>
 
