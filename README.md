@@ -102,7 +102,7 @@ you can switch anytime. Single-business accounts are selected automatically.
 | `get_financial_statement` | P&L, balance sheet, trial balance, cash flow |
 | `get_account_transactions_report` | Per-account transaction detail for a period |
 | `get_audit_trail` | Who created or changed each transaction and when, with filters for date, category, type, reviewed status, creator, editor, project, amount and free text. Requires the audit-trail permission on your NuMetric account |
-| `get_transaction_activity` | The change history of one transaction — every event with who made it, when, and which fields moved from what to what |
+| `get_transaction_activity` | The change history of one transaction, oldest first — every event with who made it, when, how it was made (`source`, e.g. a hand edit of a system-generated journal), and which fields moved from what to what on which line. The creation is usually the first event |
 
 </details>
 

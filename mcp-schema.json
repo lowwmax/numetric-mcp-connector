@@ -3400,7 +3400,7 @@
     {
       "name": "get_transaction_activity",
       "title": "Transaction change history",
-      "description": "The edit history of ONE accounting transaction: every change event with who made it, when, and which fields moved from what to what. transactionRowId is the internal row id returned as transactionRowId by get_audit_trail — NOT the human transaction number like \"COGS2026-00004\". An empty activity list means the transaction has never been edited since it was created; the creation itself is not listed as an event. Requires the audit-trail permission on the NuMetric side. Read-only.",
+      "description": "The history of ONE accounting transaction, oldest first: every event with who performed it, when, the code path that wrote it (source — e.g. a hand edit of a system-generated journal shows \"transaction.updateGeneratedJournal\"), and which fields moved from what to what, with the line each change belongs to (lineIndex/lineLabel). The first event is usually the creation (action \"created\"); transactions created before the audit trail existed have none, so count edits as the events whose action is not \"created\". transactionRowId is the internal row id returned as transactionRowId by get_audit_trail — NOT the human transaction number like \"COGS2026-00004\". Returns up to 50 events by default; check pagination.hasMore. Requires the audit-trail permission on the NuMetric side. Read-only.",
       "inputSchema": {
         "type": "object",
         "properties": {
@@ -3412,7 +3412,7 @@
             "type": "integer",
             "minimum": 1,
             "maximum": 200,
-            "description": "Events per page, 1-200. Upstream default is 5."
+            "description": "Events per page, 1-200. Default 50."
           },
           "page": {
             "type": "integer",
